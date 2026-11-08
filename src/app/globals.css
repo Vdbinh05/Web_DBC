@@ -1,26 +1,214 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-sam-cream: #FAF7F0;
+  --color-sam-card: #F3EFE6;
+  --color-sam-green: #2E7D32;
+  --color-sam-darkGreen: #1B4D20;
+  --color-sam-yellow: #F4D03F;
+  --color-sam-brown: #2C221E;
+  --color-sam-white: #FFFFFF;
+  --color-sam-muted: #5D6454;
+  --color-sam-line: #D5D2C6;
+  --color-sam-control-line: #858A79;
+  --color-sam-pressed: #102E13;
+  --color-sam-disabled: #E7E5DB;
+  --color-sam-success: #24572A;
+  --color-sam-success-bg: #EAF3E8;
+  --color-sam-warning: #674508;
+  --color-sam-warning-bg: #FFF3D0;
+  --color-sam-error: #9E261D;
+  --color-sam-error-bg: #FDECE8;
+  --color-sam-info: #264F60;
+  --color-sam-info-bg: #E8F2F5;
+
+  --text-sam-label: 0.875rem;
+  --text-sam-label--line-height: 1.5;
+  --text-sam-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-sam-body--line-height: 1.6;
+  --text-sam-subheading: clamp(1.25rem, 1.1rem + 0.65vw, 1.625rem);
+  --text-sam-subheading--line-height: 1.25;
+  --text-sam-heading: clamp(1.625rem, 1.25rem + 1.6vw, 2.5rem);
+  --text-sam-heading--line-height: 1.2;
+  --text-sam-display: clamp(2.125rem, 1.45rem + 2.85vw, 3.75rem);
+  --text-sam-display--line-height: 1.18;
+
+  --spacing-sam-touch: 2.75rem;
+  --spacing-sam-gutter: 1rem;
+  --spacing-sam-gutter-tablet: 1.5rem;
+  --spacing-sam-gutter-desktop: 2.5rem;
+  --spacing-sam-section: 4rem;
+  --spacing-sam-section-wide: 6rem;
+
+  --radius-sam-sm: 0.5rem;
+  --radius-sam-md: 0.75rem;
+  --radius-sam-lg: 1rem;
+  --shadow-sam-raised: 0 2px 8px rgb(27 77 32 / 10%);
+  --shadow-sam-overlay: 0 16px 48px rgb(44 34 30 / 20%);
+  --ease-sam-out: cubic-bezier(0.2, 0.65, 0.3, 1);
+
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-be-vietnam-pro), system-ui, sans-serif;
+  --font-heading: var(--font-fraunces), Georgia, serif;
+  --color-sam-canvas: var(--color-sam-cream);
+  --color-sam-paper: var(--color-sam-card);
+  --color-sam-surface: var(--color-sam-white);
+  --color-sam-ink: var(--color-sam-brown);
+  --color-sam-action: var(--color-sam-darkGreen);
+  --color-sam-on-action: var(--color-sam-white);
+  --color-sam-action-hover: var(--color-sam-success);
+  --color-sam-action-active: var(--color-sam-pressed);
+  --color-sam-on-disabled: var(--color-sam-muted);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --sam-z-background: 0;
+  --sam-z-content: 10;
+  --sam-z-floating: 40;
+  --sam-z-overlay: 50;
+  --sam-duration-feedback: 160ms;
+  --sam-duration-overlay: 260ms;
+  --sam-anchor-offset: 5.25rem;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-sam-cream);
+    color: var(--color-sam-brown);
+  }
+
+  body {
+    background-color: var(--color-sam-cream);
+    color: var(--color-sam-brown);
+    font-family: var(--font-be-vietnam-pro), system-ui, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-fraunces), Georgia, serif;
+    color: var(--color-sam-darkGreen);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility sam-focus {
+  &:focus-visible {
+    outline: 2px solid var(--sam-focus-ring, var(--color-sam-darkGreen));
+    outline-offset: 3px;
+  }
+}
+
+@utility sam-container {
+  width: 100%;
+  max-width: var(--container-7xl);
+  margin-inline: auto;
+  padding-inline: var(--spacing-sam-gutter);
+
+  @media (width >= 40rem) {
+    padding-inline: var(--spacing-sam-gutter-tablet);
+  }
+
+  @media (width >= 64rem) {
+    padding-inline: var(--spacing-sam-gutter-desktop);
+  }
+}
+
+@utility sam-anchor {
+  scroll-margin-block-start: var(--sam-anchor-offset);
+}
+
+@utility sam-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.75rem;
+  row-gap: 0.25rem;
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--color-sam-line);
+  font-size: var(--text-sam-label);
+  font-weight: 600;
+  line-height: var(--text-sam-label--line-height);
+  color: var(--color-sam-darkGreen);
+
+  &::before {
+    content: "";
+    flex: 0 0 0.75rem;
+    block-size: 0.25rem;
+    align-self: center;
+    background: var(--color-sam-yellow);
+  }
+}
+
+@utility sam-prose {
+  overflow-wrap: anywhere;
+
+  & > * + * {
+    margin-block-start: 1rem;
+  }
+
+  & > h2 {
+    margin-block-start: 2rem;
+    font-size: var(--text-sam-subheading);
+    font-weight: 600;
+    line-height: var(--text-sam-subheading--line-height);
+  }
+
+  & > ul,
+  & > ol {
+    padding-inline-start: 1.5rem;
+  }
+
+  & > ul {
+    list-style-type: disc;
+  }
+
+  & > ol {
+    list-style-type: decimal;
+  }
+
+  & li + li {
+    margin-block-start: 0.5rem;
+  }
+}
+
+html:has(.sam-dialog[open]) {
+  overflow: hidden;
+}
+
+.sam-dialog::backdrop {
+  background: rgb(44 34 30 / 55%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sam-dialog[open] {
+    animation: sam-dialog-enter var(--sam-duration-overlay) var(--ease-sam-out);
+  }
+
+  @keyframes sam-dialog-enter {
+    from {
+      opacity: 0;
+      transform: translate(var(--sam-dialog-enter-x, 0), var(--sam-dialog-enter-y, 0.5rem));
+    }
+  }
+}
+
+/* Custom scrollbar according to brand colors */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-sam-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sam-green);
+  border-radius: 9999px;
+  border: 2px solid var(--color-sam-cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sam-darkGreen);
 }

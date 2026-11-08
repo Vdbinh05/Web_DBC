@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trà Sâm Trường Nhân
 
-## Getting Started
+Website bán Trà Sâm Ngọc Linh dùng Next.js App Router, TypeScript và Tailwind. Trang chủ giới thiệu sản phẩm và mascot, blog có metadata và JSON-LD. Giỏ hàng dùng Zustand, API xác nhận đơn sau khi Google Sheets ghi nhận và khu vực `/admin` dùng để xử lý đơn.
 
-First, run the development server:
+- [Thiết lập Google Sheets, admin và hosting 0đ](docs/production-setup.md)
+- [Design system](docs/design-system.md)
+- [Báo cáo nâng cấp UI/UX](docs/ui-audit/final-report.md)
 
-```bash
+## Chạy và kiểm tra
+
+```sh
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint -- src
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Trang chủ ở `http://localhost:3000/`, quản trị ở `http://localhost:3000/admin`. Dùng hướng dẫn thiết lập để kết nối kho đơn và tạo mật khẩu quản trị. Các biến tích hợp nên được thiết lập trong môi trường chạy hoặc dashboard hosting.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Nội dung
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/data/products.ts` chứa danh mục combo và giá. Máy chủ tính tổng theo danh mục này.
+- `src/data/mascots.ts` chứa nhân vật và nội dung quiz.
+- `src/data/blogPosts.ts` chứa nội dung blog và metadata.
+- `integrations/google-sheets/Code.gs` là Apps Script lưu, đọc và cập nhật trạng thái đơn.
