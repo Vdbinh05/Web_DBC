@@ -9,6 +9,7 @@ import { trackCommerce } from '@/lib/commerce-analytics';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import MediaImage from '@/components/ui/MediaImage';
+import { MASCOT_PORTRAITS } from '@/components/ui/mascot-portraits';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 
@@ -70,8 +71,8 @@ export default function MascotStoryTabs() {
     <Section id="mascots" aria-labelledby="mascot-title" className="bg-sam-paper">
       <SectionHeader
         titleId="mascot-title"
-        title="Chọn phong cách năng lượng của riêng bạn"
-        subtitle="Mỗi nhân vật Mascot đại diện cho một lối sống và giải pháp bồi bổ sức khỏe chuyên biệt, đồng hành cùng bạn trên mọi chặng đường học tập, làm việc và vận động."
+        title="Bạn thích thưởng trà theo cách nào?"
+        subtitle="Gặp ba mascot Trường Nhân và tìm một combo cho giờ nghỉ giữa buổi, lúc thưởng trà ở nhà hoặc khi đi xa."
         align="start"
       >
         <div className="max-w-2xl">
@@ -138,7 +139,7 @@ export default function MascotStoryTabs() {
         <figure className="min-w-0">
           <div className="relative aspect-[5/4] overflow-hidden rounded-sam-md bg-sam-paper">
             <MediaImage
-              src={mascot.frontImg}
+              src={MASCOT_PORTRAITS[mascot.id]}
               alt={mascot.name}
               sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1100px) 40vw, 450px"
               className="object-contain p-3 sm:p-5"

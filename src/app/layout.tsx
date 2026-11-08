@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Be_Vietnam_Pro, Fraunces } from 'next/font/google';
 import SmoothScroll from '@/components/layout/SmoothScroll';
+import teaBanner from '@/components/ui/media/tea-mascots-banner.webp';
 import './globals.css';
 
 const beVietnamPro = Be_Vietnam_Pro({
@@ -19,11 +20,11 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://trasamtruongnhan.vn'),
   title: {
-    default: 'Trà Sâm Trường Nhân – Tinh Hoa Trà Sâm Ngọc Linh Chuẩn OCOP',
+    default: 'Trà Sâm Trường Nhân – Trà túi lọc với lá sâm Ngọc Linh',
     template: '%s | Trà Sâm Trường Nhân',
   },
   description:
-    'Trà Sâm Ngọc Linh túi lọc pha trong 3 phút, nguồn dược liệu chuẩn OCOP, 100% không chất bảo quản. Hỗ trợ tỉnh táo, giảm căng thẳng và tăng cường sinh lực.',
+    'Tìm hiểu thành phần, bản tự công bố và cách pha Trà Sâm Trường Nhân. Công thức trà túi lọc có 3% lá sâm Ngọc Linh.',
   keywords: [
     'trà sâm',
     'sâm ngọc linh',
@@ -32,11 +33,10 @@ export const metadata: Metadata = {
     'sâm trường nhân',
     'trà sâm trường nhân',
     'quà tặng sức khỏe',
-    'chuẩn OCOP',
   ],
-  authors: [{ name: 'Trà Sâm Trường Nhân' }],
-  creator: 'Trà Sâm Trường Nhân',
-  publisher: 'Công ty Cổ phần Sâm Trường Nhân',
+  authors: [{ name: 'Nhóm Zentrix' }],
+  creator: 'Nhóm Zentrix',
+  publisher: 'Nhóm Zentrix',
   robots: {
     index: true,
     follow: true,
@@ -53,15 +53,15 @@ export const metadata: Metadata = {
     locale: 'vi_VN',
     url: 'https://trasamtruongnhan.vn',
     siteName: 'Trà Sâm Trường Nhân',
-    title: 'Trà Sâm Trường Nhân – Trà Sâm Ngọc Linh Túi Lọc Cao Cấp',
+    title: 'Trà Sâm Trường Nhân – Trà túi lọc với lá sâm Ngọc Linh',
     description:
-      'Thưởng thức tách trà sâm Ngọc Linh chuẩn vị núi rừng chỉ sau 3 phút. Hỗ trợ bồi bổ sức khỏe, tỉnh táo và tràn đầy năng lượng mỗi ngày.',
+      'Xem hồ sơ Trà Sâm Trường Nhân và cách pha một túi với khoảng 300 ml nước sôi, đậy nắp ủ 5–7 phút.',
     images: [
       {
-        url: '/images/products/combo-1.webp',
-        width: 1200,
-        height: 630,
-        alt: 'Trà Sâm Trường Nhân - Trà Sâm Ngọc Linh',
+        url: teaBanner.src,
+        width: teaBanner.width,
+        height: teaBanner.height,
+        alt: 'Hộp trà túi lọc Trường Nhân và ba mascot',
       },
     ],
   },

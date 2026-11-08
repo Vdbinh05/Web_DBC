@@ -1,22 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Check, Mail, MapPin, Phone, ShieldCheck, TriangleAlert } from 'lucide-react';
+import { ArrowUpRight, Check, MessageCircle, ShieldCheck, TriangleAlert } from 'lucide-react';
+import { ZENTRIX_FACEBOOK_URL, ZENTRIX_MESSENGER_URL } from '@/app/dbc-contact';
 import brandMark from '@/components/ui/media/truong-nhan-mark.webp';
 import PublicAnalytics from './PublicAnalytics';
 
 const FOOTER_LINKS = [
   { href: '/#story', label: 'Câu chuyện thương hiệu' },
   { href: '/#mascots', label: 'Bộ ba mascot Sâm Ngọc Linh' },
-  { href: '/#usp', label: 'Tiêu chuẩn OCOP 4 sao' },
+  { href: '/#usp', label: 'Hồ sơ sản phẩm và nguồn gốc' },
   { href: '/#combos', label: 'Chương trình ưu đãi combo' },
-  { href: '/blog/vi-sao-gen-z-chon-tra-sam-ngoc-linh', label: 'Cẩm nang sống khỏe và bài viết' },
+  { href: '/blog/vi-sao-gen-z-chon-tra-sam-ngoc-linh', label: 'Cẩm nang thưởng trà' },
 ];
 
-const COMMITMENTS = [
-  '100% Sâm Ngọc Linh tự nhiên trên độ cao 1.800m',
-  'Ủ nhanh 3 phút tiện lợi cho công việc văn phòng',
-  'Không chất bảo quản, phẩm màu, phụ gia hóa học',
+const LABEL_FACTS = [
+  'Công thức có 3% lá sâm Ngọc Linh',
+  'Pha một túi với khoảng 300 ml nước sôi',
+  'Đậy nắp và ủ 5–7 phút',
 ];
+
+const CONTACT_LINK_CLASS = 'sam-focus inline-flex min-h-(--spacing-sam-touch) w-fit items-center gap-2 rounded-sam-sm underline underline-offset-4 hover:text-sam-yellow';
 
 export default function Footer() {
   return (
@@ -28,25 +31,25 @@ export default function Footer() {
               <Image src={brandMark} alt="" width={36} height={36} sizes="36px" className="size-9 shrink-0" />
               <div>
                 <span className="block font-heading text-2xl leading-tight font-semibold">Trường Nhân</span>
-                <span className="block text-sam-label text-sam-yellow">Trà Sâm Ngọc Linh Chuẩn OCOP</span>
+                <span className="block text-sam-label text-sam-yellow">Trà Sâm Ngọc Linh túi lọc</span>
               </div>
             </div>
-            <p className="mb-5 max-w-[50ch] text-sam-label">
-              Sứ mệnh mang quốc bảo Sâm Ngọc Linh đại ngàn vào từng túi trà túi lọc tiện dụng 3 phút.
-              Đồng hành cùng sức khỏe và sự tập trung bền bỉ của thế hệ trẻ Việt Nam.
-            </p>
-            <ul className="grid gap-2 text-sam-label">
-              <li className="flex items-start gap-2">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-sam-yellow" aria-hidden="true" />
-                <span>Vườn sâm nguyên sinh: Huyện Tu Mơ Rông / Nam Trà My, Kon Tum - Quảng Nam</span>
+            <div className="mb-3 max-w-[50ch] text-sam-label">
+              <p className="font-semibold">Nhóm Zentrix</p>
+              <p className="mt-1">Website của nhóm Zentrix tại cuộc thi DBC.</p>
+            </div>
+            <ul className="text-sam-label">
+              <li>
+                <a href={ZENTRIX_FACEBOOK_URL} target="_blank" rel="noopener" className={CONTACT_LINK_CLASS}>
+                  <ArrowUpRight className="size-4 shrink-0 text-sam-yellow" aria-hidden="true" />
+                  Facebook nhóm Zentrix
+                </a>
               </li>
-              <li className="flex items-start gap-2">
-                <Phone className="mt-0.5 size-4 shrink-0 text-sam-yellow" aria-hidden="true" />
-                <span>Hotline tư vấn: 1900 6868 (8:00 - 21:00 hàng ngày)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Mail className="mt-0.5 size-4 shrink-0 text-sam-yellow" aria-hidden="true" />
-                <span className="min-w-0 wrap-break-word">Email: trasamtruongnhan@gmail.com</span>
+              <li>
+                <a href={ZENTRIX_MESSENGER_URL} target="_blank" rel="noopener" className={CONTACT_LINK_CLASS}>
+                  <MessageCircle className="size-4 shrink-0 text-sam-yellow" aria-hidden="true" />
+                  Nhắn Messenger cho nhóm Zentrix
+                </a>
               </li>
             </ul>
           </div>
@@ -69,10 +72,10 @@ export default function Footer() {
 
           <div className="md:col-span-2 lg:col-span-1">
             <h2 className="mb-4 flex items-center gap-2 font-sans text-sam-label font-semibold text-sam-yellow">
-              <ShieldCheck className="size-5 shrink-0" aria-hidden="true" /> Cam kết chất lượng
+              <ShieldCheck className="size-5 shrink-0" aria-hidden="true" /> Thông tin trên nhãn
             </h2>
             <ul className="grid gap-3 text-sam-label">
-              {COMMITMENTS.map((item) => (
+              {LABEL_FACTS.map((item) => (
                 <li key={item} className="flex items-start gap-2">
                   <Check className="mt-0.5 size-4 shrink-0 text-sam-yellow" aria-hidden="true" />
                   {item}
@@ -90,7 +93,7 @@ export default function Footer() {
           </p>
         </div>
         <div className="mt-6 flex flex-wrap justify-between gap-x-8 gap-y-2 text-sam-label">
-          <p>© 2026 Trà Sâm Trường Nhân. Đạt chuẩn OCOP Việt Nam. All rights reserved.</p>
+          <p>© 2026 Nhóm Zentrix.</p>
           <p>Được phát triển với niềm tự hào dược liệu Việt</p>
         </div>
         <PublicAnalytics />

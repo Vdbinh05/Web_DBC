@@ -10,6 +10,7 @@ import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import MediaImage from '@/components/ui/MediaImage';
+import { MASCOT_PORTRAITS } from '@/components/ui/mascot-portraits';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 
@@ -54,7 +55,7 @@ export default function ComboOffer() {
       <SectionHeader
         titleId="combo-title"
         title="Bộ sưu tập combo trà sâm đặc quyền"
-        subtitle="Tiết kiệm tới 21% cùng quà tặng phụ kiện thưởng trà cao cấp. Tất cả sản phẩm đều đạt chuẩn OCOP 4 sao và áp dụng miễn phí vận chuyển toàn quốc."
+        subtitle="Tiết kiệm tới 21% cùng quà tặng phụ kiện thưởng trà. Miễn phí vận chuyển toàn quốc."
         align="start"
       >
         <CountdownTimer />
@@ -70,10 +71,10 @@ export default function ComboOffer() {
           >
             <div className="relative aspect-[5/4] overflow-hidden rounded-sam-md bg-sam-paper">
               <MediaImage
-                src={product.image}
+                src={MASCOT_PORTRAITS[product.mascotId]}
                 alt={`Minh họa ${product.name}`}
                 sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1023px) 44vw, 360px"
-                className="object-contain p-2"
+                className="object-contain p-4 sm:p-6"
               />
             </div>
             <div>
@@ -95,7 +96,7 @@ export default function ComboOffer() {
               </ul>
             </div>
             <div className="space-y-2 border-t border-sam-line pt-3">
-              <p className="text-sam-label font-semibold text-sam-action">Công dụng hỗ trợ</p>
+              <p className="text-sam-label font-semibold text-sam-action">Gợi ý thưởng trà</p>
               <ul className="list-disc space-y-1 ps-5 text-sam-label text-sam-ink marker:text-sam-action">
                 {product.benefits.map((benefit) => <li key={benefit}>{benefit}</li>)}
               </ul>

@@ -27,7 +27,6 @@ Thêm biến trong dashboard hosting hoặc file môi trường local của bạ
 | `ADMIN_PASSWORD` | Bắt buộc cho admin. Mật khẩu ngẫu nhiên ít nhất 32 ký tự. Đổi mật khẩu sẽ vô hiệu các phiên cũ. |
 | `NEXT_PUBLIC_SITE_URL` | URL chính thức, ví dụ `https://ten-shop.netlify.app`, dùng cho SEO và sitemap. |
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | Tùy chọn. Thông báo có mã đơn và tổng tiền sau khi Sheets xác nhận. Thông tin giao hàng nằm trong admin. |
-| `NEXT_PUBLIC_BANK_ID`, `NEXT_PUBLIC_BANK_ACCOUNT` | Tùy chọn. Điền cả hai để bật VietQR. Mã hiển thị sau khi đơn đã được ghi nhận. |
 | `GEMINI_API_KEY`, `GEMINI_MODEL` | Tùy chọn. Mặc định model `gemini-2.5-flash`. Dùng dự án Free Tier để tránh chi phí theo lượt gọi. Thiếu khóa hoặc Gemini hết hạn mức sẽ dùng câu trả lời có sẵn. [Giá và hạn mức Gemini](https://ai.google.dev/gemini-api/docs/pricing) |
 | `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID` | Tùy chọn. Script chỉ tải sau khi khách chọn cho phép đo lường ở Footer. Checkout và chat được đánh dấu che nội dung cho Clarity. |
 | `NEXT_PUBLIC_INTRO_VIDEO_URL`, `NEXT_PUBLIC_OFFER_ENDS_AT` | Tùy chọn. Dùng URL HTTPS dạng embed và mốc kết thúc có múi giờ ISO 8601 cho chiến dịch thật. Đồng hồ chỉ hiển thị khi còn thời gian. |
@@ -39,7 +38,8 @@ Trên Netlify, kết nối repo, dùng `npm run build` và publish directory `.n
 1. Mở `/admin`, đăng nhập. Thử mở trang trong cửa sổ riêng tư để kiểm tra trang quản trị yêu cầu mật khẩu.
 2. Dùng thông tin của bạn để tạo một đơn COD thử trên website vừa triển khai. Kiểm tra mã đơn xuất hiện ở `/admin` và tab `WebOrders`. Thử đổi trạng thái và đánh dấu hủy cho đơn kiểm tra.
 3. Nếu bật Telegram, kiểm tra nhóm nhận được thông báo. Sheets là nguồn đối chiếu nếu Telegram gửi lỗi.
-4. Nếu bật VietQR, đối chiếu tên người nhận và tài khoản trên ứng dụng ngân hàng. Đơn chuyển khoản cần đối soát thủ công trước khi giao.
-5. Xác minh các tuyên bố sản phẩm, bản cấp OCOP và chỉ dẫn địa lý, cách pha, giá và chính sách giao hàng trước khi chia sẻ trang bán. Đăng đánh giá khi có nội dung thật. Rà chính sách dữ liệu và quyền truy cập Sheet theo quy trình vận hành của bạn.
+4. Xác minh các tuyên bố sản phẩm, bản cấp OCOP và chỉ dẫn địa lý, cách pha, giá và chính sách giao hàng trước khi chia sẻ trang bán. Đăng đánh giá khi có nội dung thật. Rà chính sách dữ liệu và quyền truy cập Sheet theo quy trình vận hành của bạn.
 
-Khi Sheets chưa cấu hình hoặc lỗi, API trả lỗi thay cho xác nhận đơn. Nếu mất kết nối trong khi gửi, khách có thể bấm lại với cùng nội dung trong cùng phiên trang để kiểm tra lại cùng mã đơn. Telegram là kênh phụ. Trang quản trị hỗ trợ một mật khẩu quản trị chung, xem các đơn gần nhất, phân trang và cập nhật trạng thái. GA4 `purchase` đếm đơn đã ghi nhận, bao gồm COD và VietQR đang chờ đối soát. Đối chiếu trạng thái trong admin khi cần số đơn thực giao.
+Đơn mới thanh toán khi nhận hàng (COD). Nếu đã có đơn chuyển khoản trong Sheet, admin vẫn hiển thị phương thức đã lưu.
+
+Khi Sheets chưa cấu hình hoặc lỗi, API trả lỗi thay cho xác nhận đơn. Nếu mất kết nối trong khi gửi, khách có thể bấm lại với cùng nội dung trong cùng phiên trang để kiểm tra lại cùng mã đơn. Telegram là kênh phụ. Trang quản trị hỗ trợ một mật khẩu quản trị chung, xem các đơn gần nhất, phân trang và cập nhật trạng thái. GA4 `purchase` đếm đơn đã ghi nhận. Đối chiếu trạng thái trong admin khi cần số đơn thực giao.

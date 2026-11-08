@@ -31,7 +31,7 @@ async function notifyTelegram(order: StoredOrder) {
 }
 
 export async function POST(request: Request) {
-  if (!orderStorageConfigured()) return fail(503, 'Hiện chưa thể nhận đơn trực tuyến. Vui lòng thử lại sau.');
+  if (!orderStorageConfigured()) return fail(503, 'Đặt hàng trực tuyến đang tạm dừng. Bạn có thể nhắn nhóm Zentrix để được hỗ trợ.');
 
   let body;
   try {
@@ -55,10 +55,7 @@ export async function POST(request: Request) {
   if (typeof requestId !== 'string' || !ORDER_ID_PATTERN.test(`TN-${requestId}`)) {
     return fail(400, 'Phiên đặt hàng không hợp lệ. Vui lòng tải lại trang.');
   }
-  if (paymentMethod !== 'cod' && paymentMethod !== 'banking') return fail(400, 'Chọn phương thức thanh toán.');
-  if (paymentMethod === 'banking' && (!process.env.NEXT_PUBLIC_BANK_ID || !process.env.NEXT_PUBLIC_BANK_ACCOUNT)) {
-    return fail(400, 'VietQR chưa khả dụng. Bạn có thể chọn COD.');
-  }
+  if (paymentMethod !== 'cod') return fail(400, 'Đơn mới áp dụng thanh toán khi nhận hàng (COD). Vui lòng tải lại trang.');
   if (!Array.isArray(items) || !items.length || items.length > 20 ||
     items.some((item) => !item || typeof item.productId !== 'string' ||
       !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 99) ||
@@ -89,7 +86,7 @@ export async function POST(request: Request) {
       success: true,
       orderId: order.orderId,
       total: savedTotal,
-      message: 'Đơn hàng đã được ghi nhận. Trường Nhân sẽ liên hệ để xác nhận.',
+      message: 'Đơn hàng đã được ghi nhận. Nhóm Zentrix sẽ liên hệ để xác nhận.',
     }, { status: created ? 201 : 200, headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
     if (error instanceof OrderStorageError && error.code === 'conflict') {

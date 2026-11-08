@@ -2,25 +2,24 @@
 
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, Minus, Plus, QrCode, ShoppingBag, Trash2, Truck } from 'lucide-react';
+import { ArrowRight, CheckCircle2, MessageCircle, Minus, Plus, ShoppingBag, Trash2, Truck } from 'lucide-react';
+import { ZENTRIX_MESSENGER_URL } from '@/app/dbc-contact';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Dialog from '@/components/ui/Dialog';
 import { Input, Textarea } from '@/components/ui/Field';
 import MediaImage from '@/components/ui/MediaImage';
+import { MASCOT_PORTRAITS } from '@/components/ui/mascot-portraits';
 import { useCartStore } from '@/store/useCartStore';
 import { trackCommerce } from '@/lib/commerce-analytics';
 import { formatCurrency } from '@/lib/format';
 
 const PHONE_REGEX = /^(0|\+84)\d{9}$/;
-const BANK_ID = process.env.NEXT_PUBLIC_BANK_ID;
-const BANK_ACCOUNT = process.env.NEXT_PUBLIC_BANK_ACCOUNT;
 const ORDER_FORM_ID = 'order-form';
 const RETRY_MESSAGE = 'Chưa thể xác nhận đơn hàng. Vui lòng thử lại.';
 
-type PaymentMethod = 'cod' | 'banking';
 type DeliveryErrors = Partial<Record<'fullName' | 'phone' | 'address', string>>;
-type OrderConfirmation = { orderId: string; total: number; message: string; paymentMethod: PaymentMethod; phone: string };
+type OrderConfirmation = { orderId: string; total: number; message: string };
 
 export default function CartDrawer() {
   const isOpen = useCartStore((state) => state.isOpen);
@@ -35,7 +34,6 @@ export default function CartDrawer() {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [note, setNote] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cod');
   const [errors, setErrors] = useState<DeliveryErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderConfirmation, setOrderConfirmation] = useState<OrderConfirmation | null>(null);
@@ -57,10 +55,6 @@ export default function CartDrawer() {
 
   const trimmedPhone = phone.trim();
   const validPhone = PHONE_REGEX.test(trimmedPhone);
-  const qrConfigured = Boolean(BANK_ID && BANK_ACCOUNT);
-  const qrUrl = qrConfigured && orderConfirmation?.paymentMethod === 'banking'
-    ? `https://img.vietqr.io/image/${BANK_ID}-${BANK_ACCOUNT}-compact2.png?amount=${orderConfirmation.total}&addInfo=${encodeURIComponent('DBC ' + orderConfirmation.phone)}`
-    : null;
 
   function validateForm() {
     const nextErrors: DeliveryErrors = {};
@@ -89,7 +83,7 @@ export default function CartDrawer() {
       phone: trimmedPhone,
       address: address.trim(),
       note: note.trim() || undefined,
-      paymentMethod,
+      paymentMethod: 'cod',
       items: submittedItems,
     };
     pending.current = true;
@@ -117,8 +111,6 @@ export default function CartDrawer() {
         orderId: data.orderId,
         total: data.total ?? totalPrice,
         message: data.message,
-        paymentMethod,
-        phone: trimmedPhone,
       });
       lastAttempt.current = null;
       const latestCart = useCartStore.getState();
@@ -173,6 +165,11 @@ export default function CartDrawer() {
       <p role="alert" className={errorMessage ? 'wrap-anywhere text-sam-label font-medium text-sam-error' : 'sr-only'}>
         {errorMessage}
       </p>
+      {errorMessage && (
+        <a href={ZENTRIX_MESSENGER_URL} target="_blank" rel="noopener" className="sam-focus inline-flex min-h-11 items-center gap-2 rounded-sam-sm text-sam-label font-semibold text-sam-action underline underline-offset-4 hover:text-sam-action-hover">
+          <MessageCircle className="size-4 shrink-0" aria-hidden="true" /> Nhắn Messenger cho nhóm Zentrix
+        </a>
+      )}
       <p role="status" className="sr-only">{isSubmitting ? 'Đang gửi đơn hàng…' : ''}</p>
       <Button type="submit" form={ORDER_FORM_ID} loading={isSubmitting} loadingText="Đang gửi đơn hàng…" className="w-full">
         {errorMessage ? 'Thử gửi lại đơn hàng' : 'Xác nhận đặt hàng'}
@@ -200,25 +197,10 @@ export default function CartDrawer() {
             <dl className="grid gap-2 text-sam-label tabular-nums">
               <div><dt className="text-sam-muted">Mã đơn</dt><dd className="wrap-anywhere font-semibold">#{orderConfirmation.orderId}</dd></div>
               <div><dt className="text-sam-muted">Tổng thanh toán</dt><dd className="font-semibold">{formatCurrency(orderConfirmation.total)}</dd></div>
-              <div><dt className="text-sam-muted">Phương thức</dt><dd>{orderConfirmation.paymentMethod === 'banking' ? 'Chuyển khoản VietQR' : 'COD (Thanh toán khi nhận)'}</dd></div>
+              <div><dt className="text-sam-muted">Phương thức</dt><dd>Thanh toán khi nhận hàng (COD)</dd></div>
               <div><dt className="text-sam-muted">Vận chuyển</dt><dd>Giao hàng miễn phí toàn quốc</dd></div>
             </dl>
           </Card>
-          {qrUrl && (
-            <Card className="space-y-2 p-4" data-clarity-mask="True">
-              <h3 className="font-sans text-sam-label font-semibold">Mã VietQR thanh toán</h3>
-              <div className="relative aspect-square w-48 max-w-full rounded-sam-sm bg-sam-paper">
-                {/* VietQR can redirect a PNG URL to an SVG image. */}
-                <MediaImage src={qrUrl} alt="Mã VietQR thanh toán Trà Sâm Trường Nhân" sizes="192px" unoptimized referrerPolicy="no-referrer" className="object-contain" />
-              </div>
-              <dl className="space-y-1 text-sam-label">
-                <div><dt className="inline text-sam-muted">Ngân hàng · </dt><dd className="inline font-semibold">{BANK_ID}</dd></div>
-                <div><dt className="inline text-sam-muted">Số tài khoản · </dt><dd className="inline font-semibold tabular-nums">{BANK_ACCOUNT}</dd></div>
-                <div><dt className="inline text-sam-muted">Nội dung · </dt><dd className="inline font-semibold tabular-nums">DBC {orderConfirmation.phone}</dd></div>
-              </dl>
-              <p className="text-sam-label text-sam-muted">Quét mã bằng ứng dụng ngân hàng. Đơn chuyển khoản sẽ được đối soát trước khi giao.</p>
-            </Card>
-          )}
           <Button onClick={finishOrder}>Tiếp tục xem trà</Button>
         </div>
       ) : !showCheckout ? (
@@ -238,7 +220,7 @@ export default function CartDrawer() {
               {items.map(({ product, quantity }) => (
                 <li key={product.id} className="flex items-start gap-3 py-3">
                   <div className="relative size-14 shrink-0 overflow-hidden rounded-sam-sm bg-sam-paper">
-                    <MediaImage src={product.image} alt="" sizes="56px" className="object-contain" />
+                    <MediaImage src={MASCOT_PORTRAITS[product.mascotId] ?? product.image} alt="" sizes="56px" className="object-contain p-1" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4 className="font-sans text-sam-label font-semibold">{product.name}</h4>
@@ -269,21 +251,12 @@ export default function CartDrawer() {
               <Input ref={addressRef} label="Địa chỉ giao hàng chi tiết" name="street-address" autoComplete="street-address" value={address} required maxLength={500} error={errors.address} onChange={(e) => { setAddress(e.target.value); setErrors((current) => ({ ...current, address: undefined })); }} />
               <Textarea label="Ghi chú đơn hàng (không bắt buộc)" name="note" autoComplete="off" rows={2} maxLength={500} value={note} onChange={(e) => setNote(e.target.value)} />
 
-              <div role="group" aria-labelledby="order-payment-label">
-                <p id="order-payment-label" className="mb-2 text-sam-label font-semibold">Phương thức thanh toán</p>
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm" variant={paymentMethod === 'cod' ? 'primary' : 'secondary'} aria-pressed={paymentMethod === 'cod'} onClick={() => setPaymentMethod('cod')}>
-                    <Truck className="size-4 shrink-0" aria-hidden="true" /> COD (Nhận hàng)
-                  </Button>
-                  <Button size="sm" variant={paymentMethod === 'banking' ? 'primary' : 'secondary'} disabled={!qrConfigured} aria-pressed={paymentMethod === 'banking'} onClick={() => setPaymentMethod('banking')}>
-                    <QrCode className="size-4 shrink-0" aria-hidden="true" /> Chuyển khoản QR
-                  </Button>
-                </div>
+              <div className="rounded-sam-sm border border-sam-line bg-sam-paper p-3 text-sam-label">
+                <p className="font-semibold">Phương thức thanh toán</p>
+                <p className="mt-1 flex items-start gap-2 text-sam-muted">
+                  <Truck className="mt-0.5 size-4 shrink-0 text-sam-action" aria-hidden="true" /> Thanh toán khi nhận hàng (COD)
+                </p>
               </div>
-
-              <p className="text-sam-label text-sam-muted">
-                {!qrConfigured ? 'Hiện có thể thanh toán khi nhận hàng (COD).' : paymentMethod === 'banking' ? 'Mã VietQR xuất hiện sau khi đơn được ghi nhận.' : ''}
-              </p>
               <p className="text-sam-label text-sam-muted">Thông tin liên hệ và địa chỉ được dùng để xác nhận và giao đơn hàng.</p>
             </fieldset>
           </form>

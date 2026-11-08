@@ -1,7 +1,7 @@
 import { ArrowRight, Clock, Mountain, ShieldCheck } from 'lucide-react';
 import MediaImage from '@/components/ui/MediaImage';
 import Section from '@/components/ui/Section';
-import teaPackage from '@/components/ui/media/tea-package.webp';
+import teaBanner from '@/components/ui/media/tea-mascots-banner.webp';
 
 export default function HeroSection() {
   return (
@@ -16,12 +16,11 @@ export default function HeroSection() {
             Trà Sâm Ngọc Linh
           </h1>
           <p className="mt-3 max-w-[36ch] text-sam-subheading font-medium text-pretty text-sam-action">
-            Tỉnh táo tự nhiên, tràn đầy năng lượng
+            Trà túi lọc phối lá sâm Ngọc Linh và thảo mộc
           </p>
           <p className="mt-4 max-w-[56ch] text-sam-body text-sam-ink">
-            Giải pháp chăm sóc sức khỏe chủ động cho Gen Z và giới văn phòng.
-            Túi lọc tiện lợi ủ nhanh trong <strong>3 phút</strong>, hỗ trợ giảm bớt cảm giác căng thẳng trí não,
-            duy trì sự tỉnh táo bền bỉ và bồi bổ thể lực suốt ngày dài, 100% không chất bảo quản.
+            Một tách trà cho giờ nghỉ giữa buổi. Pha một túi lọc với khoảng 300 ml nước sôi
+            và ủ <strong>5–7 phút</strong> theo hướng dẫn trên nhãn.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
             <a
@@ -40,18 +39,17 @@ export default function HeroSection() {
         </div>
 
         <figure className="min-w-0">
-          <div className="relative aspect-[8/5] overflow-hidden rounded-sam-lg bg-sam-paper">
+          <div className="relative aspect-video overflow-hidden rounded-sam-lg bg-sam-paper">
             <MediaImage
-              src={teaPackage}
-              alt="Hộp Trà Sâm Trường Nhân mở, bên trong có các gói trà"
+              src={teaBanner}
+              alt="Hộp trà túi lọc bên cạnh Sâm Tự Nhiên, Sâm Tri Thức và Sâm Dũng Sĩ"
               sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1023px) 43vw, 520px"
               preload
-              className="object-cover"
+              className="object-contain"
             />
           </div>
           <figcaption className="sam-caption">
-            <span>Trà sâm túi lọc 3 phút</span>
-            <span className="font-normal text-sam-muted">Bao bì Trà Sâm Trường Nhân</span>
+            <span>Trà sâm túi lọc</span>
           </figcaption>
         </figure>
       </div>
@@ -59,15 +57,15 @@ export default function HeroSection() {
       <ul className="mt-7 flex flex-wrap gap-x-7 gap-y-3 border-t border-sam-line pt-5 text-sam-label text-sam-ink md:mt-9">
         <li className="flex items-start gap-2">
           <Clock className="mt-0.5 size-4 shrink-0 text-sam-action" aria-hidden="true" />
-          <span>Pha nhanh 3 phút tại bàn làm việc</span>
+          <span>Ủ 5–7 phút</span>
         </li>
         <li className="flex items-start gap-2">
           <ShieldCheck className="mt-0.5 size-4 shrink-0 text-sam-action" aria-hidden="true" />
-          <span>Đạt chuẩn OCOP 4 sao</span>
+          <span>Có bản tự công bố và phiếu thử nghiệm</span>
         </li>
         <li className="flex items-start gap-2">
           <Mountain className="mt-0.5 size-4 shrink-0 text-sam-action" aria-hidden="true" />
-          <span>Núi Ngọc Linh, trên 1.800m</span>
+          <span>Lá sâm Ngọc Linh 3%</span>
         </li>
       </ul>
     </Section>

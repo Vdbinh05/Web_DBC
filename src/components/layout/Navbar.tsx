@@ -12,10 +12,10 @@ import { useHydrated } from '@/lib/useHydrated';
 const NAV_LINKS = [
   { href: '/#story', label: 'Câu chuyện sâm' },
   { href: '/#mascots', label: '3 mascot' },
-  { href: '/#usp', label: 'Chuẩn OCOP' },
+  { href: '/#usp', label: 'Hồ sơ sản phẩm' },
   { href: '/#reviews', label: 'Giới thiệu' },
   { href: '/#combos', label: 'Combo' },
-  { href: '/blog/vi-sao-gen-z-chon-tra-sam-ngoc-linh', label: 'Blog sống khỏe' },
+  { href: '/blog/vi-sao-gen-z-chon-tra-sam-ngoc-linh', label: 'Cẩm nang thưởng trà' },
 ];
 
 export default function Navbar() {
@@ -35,7 +35,7 @@ export default function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-(--sam-z-floating) border-b border-sam-line bg-sam-canvas"
+      className="sticky top-0 z-(--sam-z-floating) border-b-(length:--sam-navbar-border) border-sam-line bg-sam-canvas"
       onKeyDown={(event) => {
         if (event.key === 'Escape' && menuOpen) {
           setMenuOpen(false);
@@ -43,7 +43,7 @@ export default function Navbar() {
         }
       }}
     >
-      <div className="sam-container flex min-h-16 items-center justify-between gap-2 py-2 sm:gap-4">
+      <div className="sam-container flex min-h-(--spacing-sam-navbar) items-center justify-between gap-2 py-2 sm:gap-4">
         <Link
           href="/"
           className="sam-focus flex min-h-(--spacing-sam-touch) min-w-0 items-center gap-2 rounded-sam-sm text-sam-action hover:text-sam-action-hover active:text-sam-action-active sm:gap-3"

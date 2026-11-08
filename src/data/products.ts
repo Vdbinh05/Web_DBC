@@ -23,14 +23,14 @@ export const PRODUCTS: ProductCombo[] = [
     image: '/images/products/combo-1.webp',
     mascotId: 'tri-thuc',
     benefits: [
-      'Hỗ trợ giảm căng thẳng trí não khi làm việc cường độ cao',
-      'Hỗ trợ duy trì sự tỉnh táo tự nhiên, không gây cồn cào như cà phê',
-      'Tiện lợi pha nhanh túi lọc chỉ trong 3 phút giữa giờ làm',
+      'Gọn nhẹ để mang đến lớp hoặc văn phòng',
+      'Pha trực tiếp trong ly giữ nhiệt chịu được nước sôi',
+      'Đậy nắp và ủ 5–7 phút trong giờ nghỉ',
     ],
     items: [
       '2 Hộp Trà Sâm Ngọc Linh (40 túi lọc)',
       '1 Ly giữ nhiệt inox 304 in logo Sâm Trường Nhân',
-      'Thiệp cảm ơn và hướng dẫn pha trà 3 phút chuẩn vị',
+      'Thiệp cảm ơn và hướng dẫn pha trà',
     ],
   },
   {
@@ -43,9 +43,9 @@ export const PRODUCTS: ProductCombo[] = [
     image: '/images/products/combo-2.webp',
     mascotId: 'tu-nhien',
     benefits: [
-      'Giàu hoạt chất saponin, hỗ trợ chống oxy hóa và thanh lọc cơ thể',
-      'Hỗ trợ nuôi dưỡng làn da tươi tắn, thanh nhiệt giải độc',
-      'Hương vị thanh ngọt dịu nhẹ tự nhiên khi kết hợp cùng mật ong rừng',
+      'Thưởng thức trà ấm để cảm nhận hương thảo mộc',
+      'Thử thêm một chút mật ong sau khi ủ',
+      'Điều chỉnh độ ngọt theo khẩu vị',
     ],
     items: [
       '2 Hộp Trà Sâm Ngọc Linh (40 túi lọc)',
@@ -64,9 +64,9 @@ export const PRODUCTS: ProductCombo[] = [
     mascotId: 'dung-si',
     isBestSeller: true,
     benefits: [
-      'Hỗ trợ bồi bổ thể lực và tăng cường sức bền vận động',
-      'Hỗ trợ phục hồi nhanh năng lượng sau buổi tập luyện hoặc ngày dài di chuyển',
-      'Đậm đà dưỡng chất từ củ và lá sâm Ngọc Linh chuẩn OCOP',
+      'Pha theo hướng dẫn trên nhãn trước khi mang theo',
+      'Rót trà đã nguội bớt vào bình phù hợp để dùng trong ngày',
+      'Dành cho giờ nghỉ sau buổi vận động hoặc khi đi xa',
     ],
     items: [
       '3 Hộp Trà Sâm Ngọc Linh Đặc Biệt (60 túi lọc)',

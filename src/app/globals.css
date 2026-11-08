@@ -34,6 +34,7 @@
   --text-sam-display--line-height: 1.18;
 
   --spacing-sam-touch: 2.75rem;
+  --spacing-sam-navbar: 4rem;
   --spacing-sam-gutter: 1rem;
   --spacing-sam-gutter-tablet: 1.5rem;
   --spacing-sam-gutter-desktop: 2.5rem;
@@ -70,7 +71,7 @@
   --sam-z-overlay: 50;
   --sam-duration-feedback: 160ms;
   --sam-duration-overlay: 260ms;
-  --sam-anchor-offset: 5.25rem;
+  --sam-navbar-border: 1px;
 }
 
 @layer base {
@@ -116,7 +117,7 @@
 }
 
 @utility sam-anchor {
-  scroll-margin-block-start: var(--sam-anchor-offset);
+  scroll-margin-block-start: calc(var(--spacing-sam-navbar) + var(--sam-navbar-border));
 }
 
 @utility sam-caption {
@@ -170,6 +171,16 @@
 
   & li + li {
     margin-block-start: 0.5rem;
+  }
+
+  & a {
+    color: var(--color-sam-action);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  & a:hover {
+    color: var(--color-sam-action-hover);
   }
 }
 

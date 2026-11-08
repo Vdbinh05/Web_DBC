@@ -2,9 +2,11 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { MessageCircle, RotateCcw, Send, X } from 'lucide-react';
+import { ZENTRIX_FACEBOOK_URL, ZENTRIX_MESSENGER_URL } from '@/app/dbc-contact';
 import Button from '@/components/ui/Button';
 import { Input } from '@/components/ui/Field';
 import MediaImage from '@/components/ui/MediaImage';
+import { MASCOT_PORTRAITS } from '@/components/ui/mascot-portraits';
 
 interface ChatMessage {
   id: string;
@@ -15,17 +17,18 @@ interface ChatMessage {
 const INITIAL_MESSAGES: ChatMessage[] = [{
   id: 'intro',
   role: 'assistant',
-  content: 'Chào bạn! Mình là Giáo Sư Sâm Trường Nhân. Bạn muốn hỏi về các combo, ba mascot hay cách pha trà túi lọc trong 3 phút?',
+  content: 'Chào bạn! Mình là Giáo Sư Sâm Trường Nhân. Bạn muốn hỏi về các combo, ba mascot hay cách pha trà túi lọc?',
 }];
 
 const SUGGESTIONS = [
-  'Tôi hay thức khuya chạy deadline',
-  'Combo nào hỗ trợ làn da tươi tắn?',
-  'Tôi chơi thể thao cần bứt phá thể lực',
-  'Pha trà sâm túi lọc thế nào chuẩn vị?',
+  'Pha trà túi lọc thế nào?',
+  'Trà có hồ sơ gì để đối chiếu?',
+  'Lá sâm Ngọc Linh chiếm bao nhiêu phần trăm?',
+  'Combo nào có mật ong?',
 ];
 const MESSAGE_LIMIT = 500;
 const HISTORY_LIMIT = 6;
+const SOCIAL_BUTTON_CLASS = 'sam-focus inline-flex size-12 items-center justify-center rounded-sam-md border border-sam-control-line bg-sam-surface text-sam-action shadow-sam-raised hover:bg-sam-paper active:bg-sam-disabled';
 
 export default function SamAIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -136,7 +139,7 @@ export default function SamAIChatbot() {
         >
           <header className="flex shrink-0 items-center gap-2 border-b border-sam-line bg-sam-surface px-3 py-2">
             <div className="relative size-9 shrink-0 overflow-hidden rounded-sam-sm bg-sam-paper">
-              <MediaImage src="/images/mascots/tri-thuc-front.webp" alt="" sizes="36px" className="object-cover" />
+              <MediaImage src={MASCOT_PORTRAITS['tri-thuc']} alt="" sizes="36px" className="origin-[50%_43%] scale-[1.8] object-contain" />
             </div>
             <div className="min-w-0 flex-1">
               <h2 id={`${id}-title`} className="font-heading text-sam-subheading font-semibold">Giáo Sư Sâm AI</h2>
@@ -209,15 +212,28 @@ export default function SamAIChatbot() {
           </form>
         </section>
       ) : (
-        <Button
-          ref={launcherRef}
-          className="size-12 rounded-sam-md px-2 shadow-sam-raised"
-          aria-label="Mở khung trò chuyện với Giáo Sư Sâm AI"
-          aria-haspopup="dialog"
-          onClick={() => setIsOpen(true)}
-        >
-          <MessageCircle className="size-5" aria-hidden="true" />
-        </Button>
+        <div className="flex flex-col items-end gap-2" role="group" aria-label="Kênh hỗ trợ">
+          <a href={ZENTRIX_FACEBOOK_URL} target="_blank" rel="noopener" className={SOCIAL_BUTTON_CLASS} aria-label="Facebook nhóm Zentrix" title="Facebook nhóm Zentrix">
+            <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">
+              <path d="M14 21v-8h2.8l.5-3.2H14V7.7c0-.9.3-1.5 1.6-1.5h1.8V3.3c-.7-.2-1.6-.3-2.5-.3-2.6 0-4.3 1.5-4.3 4.4v2.4H8V13h2.6v8z" />
+            </svg>
+          </a>
+          <a href={ZENTRIX_MESSENGER_URL} target="_blank" rel="noopener" className={SOCIAL_BUTTON_CLASS} aria-label="Nhắn Messenger cho nhóm Zentrix" title="Nhắn Messenger cho nhóm Zentrix">
+            <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M21 11.5c0 4.6-4 8-9 8a10 10 0 0 1-2.8-.4L5 21v-4A7.7 7.7 0 0 1 3 11.5C3 7 7 3.5 12 3.5s9 3.5 9 8Z" />
+              <path d="m7 14 4-5 2.5 2.5L17 9" />
+            </svg>
+          </a>
+          <Button
+            ref={launcherRef}
+            className="size-12 rounded-sam-md px-2 shadow-sam-raised"
+            aria-label="Mở khung trò chuyện với Giáo Sư Sâm AI"
+            aria-haspopup="dialog"
+            onClick={() => setIsOpen(true)}
+          >
+            <MessageCircle className="size-5" aria-hidden="true" />
+          </Button>
+        </div>
       )}
     </div>
   );

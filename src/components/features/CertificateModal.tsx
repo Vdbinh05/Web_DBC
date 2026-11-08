@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ArrowUpRight, FileText } from 'lucide-react';
-import Badge from '@/components/ui/Badge';
+import { FACTORY_SOURCE_URL, GI_RECORD_URL, GI_UPDATE_URL, TEA_MANUFACTURER, TEA_PRODUCT_URL } from '@/app/product-evidence';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Dialog from '@/components/ui/Dialog';
@@ -10,12 +10,13 @@ import MediaImage from '@/components/ui/MediaImage';
 import farmImage from '@/components/ui/media/ngoc-linh-farm.webp';
 import declaration from '@/components/ui/media/tea-self-declaration.webp';
 import testReport from '@/components/ui/media/tea-test-report.webp';
+import labelImage from '@/components/ui/media/tea-label.webp';
+import factoryImage from '@/components/ui/media/tea-factory.webp';
 
 const TABS = [
   { id: 'documents', label: 'Hồ sơ sản phẩm' },
-  { id: 'ocop', label: 'OCOP 4 sao' },
-  { id: 'origin', label: 'Chỉ dẫn địa lý' },
-  { id: 'farm', label: 'Vườn sâm' },
+  { id: 'origin', label: 'Nguồn gốc sâm' },
+  { id: 'factory', label: 'Nhà máy' },
 ] as const;
 
 const DOCUMENTS = [
@@ -33,48 +34,51 @@ const DOCUMENTS = [
     alt: 'Trích phiếu thử nghiệm Việt Tín, ghi tên mẫu Trà Sâm Trường Nhân và bảng chỉ tiêu thử nghiệm.',
     image: testReport,
   },
+  {
+    title: 'Mẫu nhãn sản phẩm',
+    reference: 'Trang 2 · Bản tự công bố',
+    description: 'Trích mục III, gồm thành phần, cách dùng, đơn vị sản xuất và bảng dinh dưỡng.',
+    alt: 'Mẫu nhãn Trà Sâm Trường Nhân ghi thành phần, hướng dẫn pha, thông tin doanh nghiệp và dinh dưỡng trên 100 g.',
+    image: labelImage,
+  },
 ];
 
-const INFORMATION = {
-  ocop: {
-    title: 'Chứng nhận sản phẩm OCOP 4 sao',
-    subtitle: 'Được UBND Tỉnh cấp chứng nhận xếp hạng 4 sao theo bộ tiêu chuẩn quốc gia',
-    bullets: [
-      'Đạt đầy đủ tiêu chuẩn vệ sinh an toàn thực phẩm khắt khe',
-      'Nguồn gốc dược liệu tự nhiên minh bạch 100%',
-      'Sản phẩm đặc sản thế mạnh đại diện vùng dược liệu Việt Nam',
-    ],
-  },
+const SOURCES = {
   origin: {
-    title: 'Chứng nhận chỉ dẫn địa lý Sâm Ngọc Linh',
-    subtitle: 'Xác thực nguồn sâm thu hái đúng vùng chỉ dẫn địa lý dãy núi Ngọc Linh',
-    bullets: [
-      'Kiểm định hàm lượng hoạt chất Saponin quý vượt trội',
-      'Cấp mã định danh truy xuất nguồn gốc củ sâm',
-      'Cam kết không pha tạp sâm ngoại lai hoặc chất kích thích tăng trưởng',
+    title: 'Chỉ dẫn địa lý “Ngọc Linh”',
+    description: 'Đăng ký số 00049 của Cục Sở hữu trí tuệ có phạm vi là sâm củ. Lá sâm Ngọc Linh là thành phần ghi trong bản tự công bố của Trà Sâm Trường Nhân.',
+    image: farmImage,
+    alt: 'Hai người kiểm tra cây sâm trong vườn trồng dược liệu',
+    caption: 'Vườn trồng dược liệu',
+    links: [
+      { href: GI_RECORD_URL, label: 'Mở công báo đăng ký số 00049 (PDF)' },
+      { href: GI_UPDATE_URL, label: 'Xem thông tin cập nhật từ Cục Sở hữu trí tuệ' },
     ],
   },
-  farm: {
-    title: 'Vườn sâm nguyên sinh Trường Nhân (>1.800m)',
-    subtitle: 'Mô hình bảo tồn và phát triển sâm dưới tán rừng nguyên sinh già',
-    bullets: [
-      'Độ cao lý tưởng trên 1.800m so với mực nước biển',
-      'Đất mùn rừng già màu mỡ, khí hậu sương mù mát lạnh quanh năm',
-      'Quy trình chăm sóc bán hoang dã, bảo tồn thảm thực vật bản địa',
+  factory: {
+    title: 'Đơn vị sản xuất ghi trên hồ sơ',
+    description: `Bản tự công bố ghi Trà Sâm Trường Nhân được sản xuất tại ${TEA_MANUFACTURER}, Khu công nghiệp Trà Đa, Gia Lai.`,
+    image: factoryImage,
+    alt: 'Dãy bồn thiết bị bằng thép không gỉ trong nhà máy',
+    caption: 'Thiết bị tại nhà máy',
+    links: [
+      { href: FACTORY_SOURCE_URL, label: 'Xem nhà máy và vùng trồng trên trang Trường Nhân' },
     ],
   },
 };
 
+const SOURCE_LINK_CLASS = 'sam-focus inline-flex min-h-(--spacing-sam-touch) w-fit items-center gap-1 rounded-sam-sm text-sam-label font-semibold text-sam-action underline underline-offset-4 hover:text-sam-action-hover active:text-sam-action-active';
+
 export default function CertificateModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]['id']>('documents');
-  const information = activeTab === 'documents' ? null : INFORMATION[activeTab];
+  const source = activeTab === 'documents' ? null : SOURCES[activeTab];
 
   return (
     <Dialog
       open={isOpen}
       onClose={onClose}
-      title="Hồ sơ chứng nhận và nguồn gốc dược liệu"
-      closeLabel="Đóng cửa sổ chứng nhận"
+      title="Hồ sơ trà và nguồn gốc dược liệu"
+      closeLabel="Đóng hồ sơ sản phẩm"
       className="max-w-3xl"
     >
       {isOpen && (
@@ -95,7 +99,7 @@ export default function CertificateModal({ isOpen, onClose }: { isOpen: boolean;
           </div>
 
           <div id="certificate-content">
-            {activeTab === 'documents' ? (
+            {source === null ? (
               <>
                 <h3 className="font-heading text-sam-subheading font-semibold">Tài liệu của Trà Sâm Trường Nhân</h3>
                 <p className="mt-2 mb-4 text-sam-label text-sam-muted">Ảnh trích từ hồ sơ sản phẩm do Trường Nhân cung cấp.</p>
@@ -117,7 +121,7 @@ export default function CertificateModal({ isOpen, onClose }: { isOpen: boolean;
                         href={image.src}
                         target="_blank"
                         rel="noopener"
-                        className="sam-focus mt-auto inline-flex min-h-(--spacing-sam-touch) w-fit items-center gap-1 rounded-sam-sm text-sam-label font-semibold text-sam-action underline underline-offset-4 hover:text-sam-action-hover active:text-sam-action-active"
+                        className={`mt-auto ${SOURCE_LINK_CLASS}`}
                         aria-label={`Mở ảnh ${title.toLowerCase()} trong tab mới`}
                       >
                         Mở ảnh cỡ đầy đủ <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
@@ -125,29 +129,29 @@ export default function CertificateModal({ isOpen, onClose }: { isOpen: boolean;
                     </Card>
                   ))}
                 </div>
+                <a href={TEA_PRODUCT_URL} target="_blank" rel="noopener" className={`mt-3 ${SOURCE_LINK_CLASS}`}>
+                  Đối chiếu thông tin trên trang Trường Nhân <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+                </a>
               </>
-            ) : information && (
+            ) : (
               <div className="space-y-3">
-                {activeTab !== 'farm' && <Badge tone="warning">Chưa có ảnh bản cấp để đối chiếu</Badge>}
-                <h3 className="font-heading text-sam-subheading font-semibold">{information.title}</h3>
-                {activeTab !== 'farm' && <p className="text-sam-label font-semibold text-sam-muted">Thông tin đang công bố trên website</p>}
-                <p className="text-sam-body text-sam-ink">{information.subtitle}</p>
-                {activeTab === 'farm' && (
-                  <figure>
-                    <div className="relative aspect-[8/5] max-w-md overflow-hidden rounded-sam-sm bg-sam-paper">
-                      <MediaImage src={farmImage} alt="Hai người kiểm tra cây sâm trong vườn trồng dược liệu" sizes="(max-width: 500px) calc(100vw - 4rem), 448px" className="object-cover" />
-                    </div>
-                    <figcaption className="sam-caption">Ảnh vườn trồng trong hồ sơ Trường Nhân</figcaption>
-                  </figure>
-                )}
-                <ul className="list-disc space-y-1 ps-5 text-sam-label text-sam-ink">
-                  {information.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                <h3 className="font-heading text-sam-subheading font-semibold">{source.title}</h3>
+                <p className="text-sam-body text-sam-ink">{source.description}</p>
+                <figure>
+                  <div className="relative aspect-[8/5] max-w-md overflow-hidden rounded-sam-sm bg-sam-paper">
+                    <MediaImage src={source.image} alt={source.alt} sizes="(max-width: 500px) calc(100vw - 4rem), 448px" className="object-cover" />
+                  </div>
+                  <figcaption className="sam-caption">{source.caption}</figcaption>
+                </figure>
+                <ul>
+                  {source.links.map(({ href, label }) => (
+                    <li key={href}>
+                      <a href={href} target="_blank" rel="noopener" className={SOURCE_LINK_CLASS}>
+                        {label} <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+                      </a>
+                    </li>
+                  ))}
                 </ul>
-                {activeTab === 'farm' && (
-                  <p className="border-t border-sam-line pt-3 text-sam-label">
-                    <span className="text-sam-muted">Cam kết chất lượng Trường Nhân</span> · <strong>100% Sâm Ngọc Linh Thật</strong>
-                  </p>
-                )}
               </div>
             )}
           </div>

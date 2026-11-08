@@ -20,11 +20,11 @@ export const MASCOTS: Mascot[] = [
   {
     id: 'tri-thuc',
     name: 'Sâm Tri Thức',
-    role: 'Tỉnh Táo & Tập Trung',
-    tagline: 'Đồng hành vượt deadline – Giữ trọn sự tỉnh táo',
+    role: 'Học Tập & Làm Việc',
+    tagline: 'Một tách trà giữa giờ chạy deadline',
     target: 'Sinh viên chạy deadline, dân IT & chuyên viên văn phòng',
     description:
-      'Hỗ trợ giảm căng thẳng trí não, duy trì sự tỉnh táo và tập trung cao độ suốt ngày dài học tập, làm việc mà không lo cồn ruột.',
+      'Sâm Tri Thức mang theo sách, laptop và một ly trà ấm cho giờ nghỉ giữa buổi học hoặc ngày làm việc.',
     avatar: '/images/mascots/tri-thuc-front.webp',
     frontImg: '/images/mascots/tri-thuc-front.webp',
     actionImg: '/images/mascots/tri-thuc-laptop.webp',
@@ -32,39 +32,39 @@ export const MASCOTS: Mascot[] = [
     traits: [
       'Kính tròn thông thái, mũ lá sâm tràn đầy ý tưởng',
       'Luôn mang theo laptop & cuốn sách tri thức',
-      'Pha trà trong 3 phút – nạp lại 100% năng lượng tư duy',
+      'Đậy nắp ly và ủ trà 5–7 phút theo nhãn',
     ],
-    quote: 'Deadline dù căng, nhấp ngụm sâm ấm, đầu óc tức khắc hanh thông!',
+    quote: 'Mình nghỉ tay một chút, pha trà rồi quay lại với bài làm nhé.',
     badgeText: 'Dành Cho Văn Phòng & Học Tập',
   },
   {
     id: 'tu-nhien',
     name: 'Sâm Tự Nhiên',
-    role: 'Thanh Lọc & Rạng Rỡ',
-    tagline: 'Vẻ đẹp thuần khiết từ thảo dược đại ngàn',
-    target: 'Người yêu lối sống lành mạnh, chăm sóc sắc đẹp tự nhiên',
+    role: 'Thảo Mộc & Mật Ong',
+    tagline: 'Tách trà ấm cho một buổi sáng thong thả',
+    target: 'Người thích trà thảo mộc và vị ngọt nhẹ của mật ong',
     description:
-      'Giàu hoạt chất saponin quý, hỗ trợ chống oxy hóa, hỗ trợ thanh nhiệt giải độc và nuôi dưỡng làn da tươi tắn từ sâu bên trong.',
+      'Sâm Tự Nhiên thích pha trà theo nhãn rồi thêm chút mật ong tùy khẩu vị.',
     avatar: '/images/mascots/tu-nhien-front.webp',
     frontImg: '/images/mascots/tu-nhien-front.webp',
     actionImg: '/images/mascots/tu-nhien-tea.webp',
     recommendedCombo: PRODUCTS[1], // combo-tu-nhien
     traits: [
       'Mái tóc lá sâm bồng bềnh điểm xuyết hoa trắng & quả đỏ mọng',
-      'Tách trà ấm thanh ngọt tự nhiên, không hương liệu nhân tạo',
-      'Liệu pháp cân bằng thân - tâm - trí mỗi sớm mai',
+      'Tách trà ấm với táo đỏ, kỷ tử và các thảo mộc trong công thức',
+      'Thêm mật ong theo khẩu vị sau khi trà đã ủ xong',
     ],
     quote: 'Mỗi ngày một tách trà sâm, lắng nghe cơ thể được vỗ về thanh nhẹ.',
-    badgeText: 'Lối Sống Lành Mạnh & Dưỡng Nhan',
+    badgeText: 'Dành Cho Người Thích Trà Thảo Mộc',
   },
   {
     id: 'dung-si',
     name: 'Sâm Dũng Sĩ',
-    role: 'Bứt Phá Năng Lượng',
-    tagline: 'Sức mạnh kiên cường – Chinh phục mọi thử thách',
+    role: 'Vận Động & Đi Xa',
+    tagline: 'Mang theo tách trà cho giờ nghỉ sau buổi tập',
     target: 'Người chơi thể thao, rèn luyện thể chất & vận động cường độ cao',
     description:
-      'Hỗ trợ bồi bổ thể lực, hỗ trợ tăng sức bền, phục hồi năng lượng nhanh chóng sau khi tập luyện hoặc những chuyến đi xa.',
+      'Sâm Dũng Sĩ mang theo bình cá nhân để có một tách trà trong giờ nghỉ khi đi xa hoặc sau buổi tập.',
     avatar: '/images/mascots/dung-si-front.webp',
     frontImg: '/images/mascots/dung-si-front.webp',
     actionImg: '/images/mascots/dung-si-energy.webp',
@@ -72,9 +72,9 @@ export const MASCOTS: Mascot[] = [
     traits: [
       'Áo khoác thể thao xanh - vàng cùng áo choàng dũng sĩ kiên định',
       'Đôi mắt sáng ngời ý chí tiên phong bứt phá giới hạn',
-      'Dồi dào khoáng chất sâm rừng nguyên chất chuẩn OCOP',
+      'Mang trà túi lọc trong chuyến đi hoặc dùng sau buổi tập',
     ],
-    quote: 'Chinh phục mọi cung đường và thử thách cùng nguồn sinh lực dồi dào!',
+    quote: 'Đi một quãng rồi dừng lại nhấp ngụm trà nhé!',
     badgeText: 'Bứt Phá Thể Lực & Thể Thao',
   },
 ];
@@ -92,7 +92,7 @@ export interface QuizQuestion {
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 1,
-    question: 'Thời điểm nào trong ngày bạn cảm thấy cần "nạp năng lượng" nhất?',
+    question: 'Bạn thường muốn nghỉ tay thưởng trà vào lúc nào?',
     options: [
       {
         text: 'Chiều 2h - 4h khi ngồi trước màn hình máy tính đang dí deadline',
@@ -100,7 +100,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         icon: '💻',
       },
       {
-        text: 'Buổi sáng thức dậy cần thanh lọc cơ thể và bắt đầu ngày mới nhẹ nhõm',
+        text: 'Buổi sáng, khi có thời gian ngồi uống trà thong thả',
         targetMascot: 'tu-nhien',
         icon: '🌿',
       },
@@ -113,20 +113,20 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 2,
-    question: 'Ưu tiên lớn nhất của bạn cho sức khỏe hiện nay là gì?',
+    question: 'Bạn muốn dùng trà trong dịp nào nhất?',
     options: [
       {
-        text: 'Giữ đầu óc minh mẫn, không stress, giảm áp lực công việc',
+        text: 'Nghỉ giữa giờ học hoặc làm việc',
         targetMascot: 'tri-thuc',
         icon: '🧠',
       },
       {
-        text: 'Thanh nhiệt, nuôi dưỡng làn da tươi sáng và duy trì vóc dáng tự nhiên',
+        text: 'Thưởng trà tại nhà với chút mật ong',
         targetMascot: 'tu-nhien',
         icon: '✨',
       },
       {
-        text: 'Tăng cường sức bền, cải thiện cơ bắp và phục hồi sinh lực dẻo dai',
+        text: 'Nghỉ sau buổi tập hoặc trong một chuyến đi',
         targetMascot: 'dung-si',
         icon: '🔥',
       },
@@ -137,7 +137,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     question: 'Cách bạn thích tận hưởng một tách trà sâm?',
     options: [
       {
-        text: 'Pha nhanh 3 phút trong ly giữ nhiệt đặt cạnh bàn làm việc',
+        text: 'Ủ 5–7 phút trong ly giữ nhiệt đặt cạnh bàn làm việc',
         targetMascot: 'tri-thuc',
         icon: '⏱️',
       },
@@ -147,7 +147,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         icon: '🍯',
       },
       {
-        text: 'Pha đậm đà mang theo trong bình thể thao sẵn sàng tiếp sức',
+        text: 'Pha theo nhãn rồi mang theo trong bình cá nhân',
         targetMascot: 'dung-si',
         icon: '🏃',
       },
