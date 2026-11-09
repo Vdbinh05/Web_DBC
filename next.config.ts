@@ -1,6 +1,21 @@
 import type { NextConfig } from "next";
+import { ADMIN_HOST, ADMIN_PATH } from "./src/lib/admin-routing";
+
+const adminHost = [{ type: "host" as const, value: ADMIN_HOST.replaceAll(".", "\\.") }];
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: ADMIN_PATH, has: adminHost, destination: "/", permanent: false },
+    ];
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: "/", has: adminHost, destination: ADMIN_PATH },
+      ],
+    };
+  },
   images: {
     remotePatterns: [
       {

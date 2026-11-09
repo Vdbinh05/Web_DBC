@@ -1,10 +1,16 @@
 import 'server-only';
 
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
+import { ADMIN_HOST, ADMIN_PATH } from './admin-routing';
 
 const COOKIE_NAME = 'tn_admin_session';
 const SESSION_SECONDS = 8 * 60 * 60;
+
+export async function adminPath() {
+  const host = (await headers()).get('host')?.split(':', 1)[0].toLowerCase();
+  return host === ADMIN_HOST ? '/' : ADMIN_PATH;
+}
 
 function adminPassword() {
   const password = process.env.ADMIN_PASSWORD;
@@ -41,7 +47,7 @@ export async function startAdminSession(value: unknown) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    path: '/admin',
+    path: await adminPath(),
     maxAge: SESSION_SECONDS,
   });
   return true;
@@ -52,7 +58,7 @@ export async function endAdminSession() {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    path: '/admin',
+    path: await adminPath(),
     maxAge: 0,
   });
 }

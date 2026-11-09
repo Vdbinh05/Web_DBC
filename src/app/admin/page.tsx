@@ -5,7 +5,7 @@ import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import { Input, Select } from '@/components/ui/Field';
-import { adminAuthenticated, adminConfigured } from '@/lib/admin-session';
+import { adminAuthenticated, adminConfigured, adminPath } from '@/lib/admin-session';
 import { formatCurrency } from '@/lib/format';
 import { listOrders, ORDER_STATUSES, type StoredOrder } from '@/lib/order-storage';
 import { changeStatus, login, logout } from './actions';
@@ -74,7 +74,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   const query = await searchParams;
   const requested = Number(query.before);
   const before = Number.isSafeInteger(requested) && requested >= 3 ? requested : null;
-  const signedIn = await adminAuthenticated();
+  const [signedIn, path] = await Promise.all([adminAuthenticated(), adminPath()]);
+  const storefront = path === '/' ? (process.env.NEXT_PUBLIC_SITE_URL || 'https://zentrix.id.vn') : '/';
   let results: Awaited<ReturnType<typeof listOrders>> | null = null;
   if (signedIn) {
     try { results = await listOrders(before); } catch { /* Render the retry state below. */ }
@@ -85,7 +86,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     <main className="sam-container py-8 sm:py-12" data-clarity-mask="True">
       <header className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-sam-line pb-4">
         <div>
-          <Link href="/" prefetch={false} className={linkStyle}>Trà Sâm Trường Nhân</Link>
+          <Link href={storefront} prefetch={false} className={linkStyle}>Trà Sâm Trường Nhân</Link>
           <h1 className="font-heading text-sam-heading font-semibold">Quản lý đơn hàng</h1>
         </div>
         {signedIn && <form action={logout}><Button type="submit" variant="secondary" size="sm">Đăng xuất</Button></form>}
@@ -108,7 +109,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           {!results ? (
             <Card className="max-w-lg">
               <p role="alert">Chưa tải được đơn hàng từ Google Sheets.</p>
-              <Link href={before ? `/admin?before=${before}` : '/admin'} prefetch={false} className={linkStyle}>Thử tải lại</Link>
+              <Link href={before ? `${path}?before=${before}` : path} prefetch={false} className={linkStyle}>Thử tải lại</Link>
             </Card>
           ) : results.orders.length ? (
             <div className="grid gap-4 lg:grid-cols-2">
@@ -123,8 +124,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           )}
           {(before || results?.nextBefore) && (
             <nav aria-label="Phân trang đơn hàng" className="mt-5 flex flex-wrap gap-4">
-              {before && <Link href="/admin" prefetch={false} className={linkStyle}>Về đơn mới nhất</Link>}
-              {results?.nextBefore && <Link href={`/admin?before=${results.nextBefore}`} prefetch={false} className={linkStyle}>Xem đơn cũ hơn</Link>}
+              {before && <Link href={path} prefetch={false} className={linkStyle}>Về đơn mới nhất</Link>}
+              {results?.nextBefore && <Link href={`${path}?before=${results.nextBefore}`} prefetch={false} className={linkStyle}>Xem đơn cũ hơn</Link>}
             </nav>
           )}
         </>
