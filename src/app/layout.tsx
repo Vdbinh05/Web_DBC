@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'vi_VN',
-    url: 'https://trasamtruongnhan.vn',
+    url: '/',
     siteName: 'Trà Sâm Trường Nhân',
     title: 'Trà Sâm Trường Nhân – Trà túi lọc với lá sâm Ngọc Linh',
     description:

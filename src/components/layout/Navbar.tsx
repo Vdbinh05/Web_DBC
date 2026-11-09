@@ -35,7 +35,7 @@ export default function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-(--sam-z-floating) border-b-(length:--sam-navbar-border) border-sam-line bg-sam-canvas"
+      className="sam-reading-progress sticky top-0 z-(--sam-z-floating) border-b-(length:--sam-navbar-border) border-sam-line bg-sam-canvas"
       onKeyDown={(event) => {
         if (event.key === 'Escape' && menuOpen) {
           setMenuOpen(false);

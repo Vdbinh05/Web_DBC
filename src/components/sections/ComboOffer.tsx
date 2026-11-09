@@ -67,14 +67,14 @@ export default function ComboOffer() {
             as="article"
             key={product.id}
             aria-labelledby={product.id}
-            className="flex flex-col gap-4 md:row-span-6 md:grid md:grid-rows-subgrid"
+            className="sam-combo-card flex flex-col gap-4 md:row-span-6 md:grid md:grid-rows-subgrid"
           >
             <div className="relative aspect-[5/4] overflow-hidden rounded-sam-md bg-sam-paper">
               <MediaImage
                 src={MASCOT_PORTRAITS[product.mascotId]}
                 alt={`Minh họa ${product.name}`}
                 sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1023px) 44vw, 360px"
-                className="object-contain p-4 sm:p-6"
+                className="sam-combo-image object-contain p-4 sm:p-6"
               />
             </div>
             <div>

@@ -193,6 +193,60 @@ html:has(.sam-dialog[open]) {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .sam-hero-image {
+    transform-origin: 66% 58%;
+    animation: sam-hero-settle 380ms var(--ease-sam-out);
+  }
+
+  .sam-mascot-enter {
+    animation: sam-mascot-enter 240ms var(--ease-sam-out);
+  }
+
+  .sam-combo-image {
+    transition: transform 220ms var(--ease-sam-out);
+  }
+
+  .sam-combo-card:focus-within .sam-combo-image {
+    transform: translateY(-3px) scale(1.035);
+  }
+
+  @media (hover: hover) {
+    .sam-combo-card:hover .sam-combo-image {
+      transform: translateY(-3px) scale(1.035);
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .sam-reading-progress::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      inset-block-end: 0;
+      height: 2px;
+      pointer-events: none;
+      background: var(--color-sam-green);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: sam-reading-progress auto linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @keyframes sam-hero-settle {
+    from { transform: scale(1.045); }
+    to { transform: none; }
+  }
+
+  @keyframes sam-mascot-enter {
+    from { opacity: 0.48; transform: translateY(7px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes sam-reading-progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
   .sam-dialog[open] {
     animation: sam-dialog-enter var(--sam-duration-overlay) var(--ease-sam-out);
   }

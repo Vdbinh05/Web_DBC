@@ -45,7 +45,7 @@ export default function HeroSection() {
               alt="Hộp trà túi lọc bên cạnh Sâm Tự Nhiên, Sâm Tri Thức và Sâm Dũng Sĩ"
               sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1023px) 43vw, 520px"
               preload
-              className="object-contain"
+              className="sam-hero-image object-contain"
             />
           </div>
           <figcaption className="sam-caption">

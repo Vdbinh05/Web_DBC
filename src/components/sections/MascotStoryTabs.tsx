@@ -139,10 +139,11 @@ export default function MascotStoryTabs() {
         <figure className="min-w-0">
           <div className="relative aspect-[5/4] overflow-hidden rounded-sam-md bg-sam-paper">
             <MediaImage
+              key={mascot.id}
               src={MASCOT_PORTRAITS[mascot.id]}
               alt={mascot.name}
               sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1100px) 40vw, 450px"
-              className="object-contain p-3 sm:p-5"
+              className="sam-mascot-enter object-contain p-3 sm:p-5"
             />
           </div>
           <figcaption className="sam-caption">{mascot.badgeText}</figcaption>
