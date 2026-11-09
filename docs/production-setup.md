@@ -10,11 +10,18 @@ Dùng Netlify Free với tên miền phụ `*.netlify.app` và chọn gói Free 
 2. Tạo hai bí mật khác nhau bằng cách chạy lệnh dưới đây hai lần trong máy của bạn. Một giá trị dùng cho webhook, giá trị còn lại dùng làm mật khẩu admin.
 3. Trong **Project Settings → Script Properties**, thêm `SPREADSHEET_ID` (phần giữa `/d/` và `/edit` của URL Sheet) và `WEBHOOK_SECRET` (bí mật webhook).
 4. Chọn **Deploy → New deployment → Web app**, **Execute as me**, **Who has access: Anyone**. Chia sẻ quyền truy cập web app ở cấp này để máy chủ Next.js gọi được. Spreadsheet vẫn để riêng tư và mỗi request cần bí mật. Sao chép URL kết thúc bằng `/exec`.
-5. Webhook tạo tab `WebOrders` khi truy cập hợp lệ lần đầu. Nếu từng dùng webhook cũ, giữ tab cũ riêng để đối chiếu. Tab mới có schema riêng. Vận hành bằng `/admin`, tránh sắp xếp hay xóa hàng trực tiếp trong tab vì phân trang dựa trên vị trí dòng. [Hướng dẫn Apps Script Web App](https://developers.google.com/apps-script/guides/web) · [Hạn mức Apps Script](https://developers.google.com/apps-script/guides/services/quotas)
+5. Webhook tạo tab `WebOrders` khi truy cập hợp lệ lần đầu. Nếu từng dùng webhook cũ, giữ tab cũ riêng để đối chiếu. Tab mới có schema riêng. Cập nhật trạng thái ở [trang quản trị](https://admin.zentrix.id.vn). Giữ thứ tự các dòng trong Sheet vì phân trang dựa trên vị trí dòng. [Hướng dẫn Apps Script Web App](https://developers.google.com/apps-script/guides/web) · [Hạn mức Apps Script](https://developers.google.com/apps-script/guides/services/quotas)
 
 ```sh
 node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 ```
+
+## Kết nối GA4 với trang quản trị
+
+1. Trong Google Analytics, tạo thuộc tính GA4 và luồng dữ liệu Web cho `https://zentrix.id.vn`. Lấy **Measurement ID** dạng `G-...` trong luồng dữ liệu và **Property ID** dạng số trong phần thông tin thuộc tính. Website đã có mã đo lường và dùng Measurement ID từ biến môi trường. [Thiết lập Google Analytics](https://support.google.com/analytics/answer/9304153)
+2. Trong Google Cloud, tạo hoặc chọn một project, bật **Google Analytics Data API**, rồi tạo một tài khoản dịch vụ. Thêm email của tài khoản dịch vụ vào **Property access management** của thuộc tính GA4 với vai trò **Viewer**. Tạo khóa JSON của tài khoản dịch vụ. [Hướng dẫn Google Analytics Data API](https://developers.google.com/analytics/devguides/reporting/data/v1/quickstart) · [Tạo khóa tài khoản dịch vụ](https://cloud.google.com/iam/docs/keys-create-delete)
+3. Trong Vercel → **Settings → Environment Variables**, chọn **Production**. Điền Measurement ID vào `NEXT_PUBLIC_GA_ID`, Property ID vào `GA4_PROPERTY_ID` và toàn bộ nội dung tệp khóa vào `GA4_SERVICE_ACCOUNT_JSON` dưới dạng **Secret**. Tạo bản deploy mới để Vercel áp dụng cấu hình. [Biến môi trường trên Vercel](https://vercel.com/docs/environment-variables/managing-environment-variables)
+4. Mở trang bán hàng, bấm **Cho phép đo lường truy cập** ở chân trang rồi tải một trang bài viết. Đăng nhập trang quản trị và mở **Thống kê truy cập**. Mục khách trong 30 phút qua lấy từ báo cáo Realtime. Số liệu 7 hoặc 30 ngày lấy từ báo cáo chuẩn của GA4 và có thể cập nhật chậm hơn. [Báo cáo Realtime](https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics)
 
 ## Biến môi trường
 
@@ -29,9 +36,12 @@ Thêm biến trong dashboard hosting hoặc file môi trường local của bạ
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | Tùy chọn. Thông báo có mã đơn và tổng tiền sau khi Sheets xác nhận. Thông tin giao hàng nằm trong admin. |
 | `GEMINI_API_KEY`, `GEMINI_MODEL` | Tùy chọn. Mặc định model `gemini-2.5-flash`. Dùng dự án Free Tier để tránh chi phí theo lượt gọi. Thiếu khóa hoặc Gemini hết hạn mức sẽ dùng câu trả lời có sẵn. [Giá và hạn mức Gemini](https://ai.google.dev/gemini-api/docs/pricing) |
 | `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID` | Tùy chọn. Script chỉ tải sau khi khách chọn cho phép đo lường ở Footer. Checkout và chat được đánh dấu che nội dung cho Clarity. |
+| `GA4_PROPERTY_ID`, `GA4_SERVICE_ACCOUNT_JSON` | Dùng cho tab Thống kê truy cập. Property ID là mã số. Tệp khóa JSON chỉ dùng ở máy chủ. |
 | `NEXT_PUBLIC_INTRO_VIDEO_URL`, `NEXT_PUBLIC_OFFER_ENDS_AT` | Tùy chọn. Dùng URL HTTPS dạng embed và mốc kết thúc có múi giờ ISO 8601 cho chiến dịch thật. Đồng hồ chỉ hiển thị khi còn thời gian. |
 
 Trên Netlify, kết nối repo, dùng `npm run build` và publish directory `.next`. Dùng Node 22 hoặc 24 LTS. Đặt biến server cho Functions và biến `NEXT_PUBLIC_*` cho build. Tạo bản deploy mới sau khi thay biến công khai để giá trị được đưa vào mã trình duyệt.
+
+Trên Vercel, thêm `ADMIN_PASSWORD`, `GOOGLE_SHEETS_WEBHOOK_URL` và `GOOGLE_SHEETS_WEBHOOK_SECRET` vào môi trường **Production**. Đặt mật khẩu và bí mật webhook dưới dạng **Secret**, sau đó redeploy.
 
 ## Kiểm tra trước khi nhận đơn
 
